@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+
+    font-family: monospace;
+    font-weight: 100;
+}
+
+:root {
+    --padding: 2px;
+}

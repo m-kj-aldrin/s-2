@@ -1,29 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>shadow</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>shadow</title>
 
-    <script src="./src/js/app.js" type="module"></script>
-  </head>
-  <body>
-    <com-network>
-      <com-chain>
-        <com-module> </com-module>
-        <com-module> </com-module>
-        <com-module>
-          <com-out></com-out>
-          <com-out></com-out>
-        </com-module>
-      </com-chain>
-      <com-chain>
-        <com-module> </com-module>
-        <com-module> </com-module>
-        <com-module>
-          <com-out></com-out>
-        </com-module>
-      </com-chain>
-    </com-network>
-  </body>
+        <link rel="stylesheet" href="src/style/main.css" />
+        <script src="./src/js/app.js" type="module"></script>
+    </head>
+    <body>
+        <template id="Base">
+            <style>
+                :host {
+                    border-radius: 2px;
+                    padding: var(--padding);
+
+                    --gap: 2px;
+                    gap: var(--gap);
+                }
+            </style>
+        </template>
+
+        <!-- LAYOUT TEMPLATES -->
+
+        <template id="LayoutBase"></template>
+
+        <template id="XFlex">
+            <style>
+                :host {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                :host([row]) {
+                    flex-direction: row;
+                }
+
+                :host([gap="2"]) {
+                    --gap: 2px;
+                }
+
+                :host([gap="3"]) {
+                    --gap: 4px;
+                }
+
+                :host([gap="4"]) {
+                    --gap: 8px;
+                }
+            </style>
+            <slot></slot>
+        </template>
+
+        <!-- COM TEMPLATES -->
+
+        <template id="COMBase">
+            <style>
+                :host {
+                    display: flex;
+                    flex-direction: column;
+
+                    border: 1px currentColor solid;
+                }
+            </style>
+        </template>
+
+        <template id="COMNetwork">
+            <style>
+                :host {
+                    height: 100%;
+                    flex-direction: row;
+                }
+            </style>
+            <x-flex row>
+                <slot></slot>
+            </x-flex>
+        </template>
+
+        <template id="COMChain">
+            <style></style>
+
+            <x-flex gap="4">
+                <slot></slot>
+            </x-flex>
+        </template>
+
+        <template id="COMModule">
+            <style>
+                :host {
+                    box-shadow: 0 0 4px 2px #0001;
+                }
+                :host(:where(:not([type]), [type="PTH"])) #parameters {
+                    display: none;
+                }
+
+                x-flex {
+                    border: 1px currentColor solid;
+                }
+            </style>
+            <span id="type"></span>
+
+            <x-flex id="parameters"></x-flex>
+
+            <x-flex row>
+                <slot></slot>
+            </x-flex>
+        </template>
+
+        <template id="COMParameter">
+            <style>
+                :host {
+                    flex-direction: row;
+                    align-items: center;
+                }
+                input {
+                    font-family: inherit;
+                    font-weight: inherit;
+                    color: currentColor;
+                    border: none;
+                    max-width: 6ch;
+                }
+            </style>
+            <label id="name" for="parameter"></label>
+            <input id="parameter" name="" type="text" value="" />
+        </template>
+
+        <template id="COMOut">
+            <style>
+                :host {
+                    --padding: 4px;
+                    height: 100%;
+                    aspect-ratio: 1/1;
+
+                    display: grid;
+                    place-content: center;
+                }
+            </style>
+            <span id="icon">&DownTeeArrow;</span>
+        </template>
+
+        <template id="COMPeriphial"></template>
+
+        <!-- <com-network>
+            <com-chain>
+                <com-module type="LFO"></com-module>
+                <com-module type="PROB"></com-module>
+                <com-module>
+                    <com-out></com-out>
+                    <com-out></com-out>
+                </com-module>
+            </com-chain>
+            <com-chain>
+                <com-module type="PROB"></com-module>
+                <com-module type="PROB">
+                    <com-out></com-out>
+                </com-module>
+            </com-chain>
+        </com-network> -->
+    </body>
 </html>
